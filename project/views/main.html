@@ -83,5 +83,18 @@
   </script>
   <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=e6dfab2f13622dce81330992b5eff90a&libraries=services"></script>
   <script src="/map.js"></script>
+
+  <!-- 지도 / 페이지 스크롤 분리 -->
+  <script>
+    const mapContainer = document.getElementById('map');
+
+    mapContainer.addEventListener('mouseenter', () => {
+    fullpage_api.setAutoScrolling(false);
+    });
+
+    mapContainer.addEventListener('mouseleave', () => {
+    fullpage_api.setAutoScrolling(true);
+    });
+  </script>
 </body>
 </html>
