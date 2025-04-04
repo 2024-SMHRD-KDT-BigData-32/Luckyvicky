@@ -41,31 +41,6 @@ body {
   align-items: center;
 }
 
-/* 제목 */
-h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1e90ff;
-  margin-bottom: 1rem;
-}
-
-/* 본문 */
-p {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 1rem;
-}
-
-/* 버튼 그룹 */
-/* .nav-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 2rem;
-  width: 100%;
-  max-width: 340px;
-} */
 .nav-buttons {
   position: absolute;
   bottom: 0;
@@ -78,14 +53,6 @@ p {
   border-top: 1px solid #ddd;
 }
 
-
-/* 버튼 크기 줄이기 */
-/* .nav-buttons button {
-  flex: 1;
-  padding: 0.6rem 0.5rem;
-  font-size: 0.9rem;
-  white-space: nowrap;
-} */
 .nav-buttons button {
   background: none;
   border: none;
@@ -121,6 +88,22 @@ ul li {
   text-align: left;
 }
 
+
+/* 제목 */
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1e90ff;
+  margin-bottom: 1rem;
+}
+
+/* 본문 */
+p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
 /* 화살표 버튼 */
 .scroll-up {
   position: absolute;
@@ -138,8 +121,6 @@ ul li {
   z-index: 999;
 }
 
-
-
 /* fullPage.js 네비게이션 위치 조정 */
 #fp-nav {
   position: fixed !important;
@@ -149,49 +130,73 @@ ul li {
   z-index: 9999;
 }
 
-/* ✅ 상단 바 전체 */
+/* ------------------------------ 메인 화면 첫번째 페이지 상단바 -----------------------*/
+
+/* 상단 바 */
 .top-bar {
-  width: 100%;
-  background-color: #ecedee;
-  color: rgb(5, 5, 5);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 1rem;
-  font-weight: bold;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  position: absolute;
-  top: 0;
-  left: 0;
+    width: 100%;
+    background-color: #010911;
+    color: rgb(112, 94, 94);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    /* 모서리 둥글게*/
+    /* border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px; */
+    position: absolute;
+    top: 0;
+    height: 80px;
 }
 
-.top-bar h2{
-  color: rgb(2, 2, 2);
-}
-
-
+/* 상단바 높이 조절 */
 .top-bar .left, .top-bar .right {
   display: flex;
-  height: 100%;
-  margin-bottom: 70px;
+  align-items: center;
+  gap: 16px;
 }
 
-.left-text {
-  font-size: 1rem;
+/* 중앙 로고 영역 스타일 */
+.center-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+.center-logo img {
+  height: 100px; /* 필요시 조정 */
+  object-fit: contain;
+}
 
-.menu-btn, .mypage-btn {
+.menu-btn, .mypage-btn, .car_info-btn {
   background: none;
   border: none;
-  padding: 0;
   cursor: pointer;
 }
 
 .mypage-btn img, .menu-btn img {
   width: 24px;
   height: 24px;
+}
+
+.car_info-btn img {
+  width: 26px;
+  height: 28px;
+}
+
+.top-bar .right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* 상단바 오른쪽 아이콘 사이 여백 */
+}
+
+
+/* ---------------------메인 화면 첫번째 페이지 본문 ----------------------------*/
+
+/* 본문 차량 정보 스타일 */
+.car-summary {
+  margin-top: 15%;
+  text-align: center;
 }
 
 .car-icon {
@@ -201,7 +206,14 @@ ul li {
   vertical-align: middle;
 }
 
-
+.car-summary h2 {
+  font-size: 1.3rem;
+  color: #1e90ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
 
 /* ----------------------------------지도 css-------------------------------------- */
 
