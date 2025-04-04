@@ -8,6 +8,7 @@
   <!-- fullpage.js CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
   <link rel="stylesheet" href="/main.css" />
+  <script defer src="../carinfo.js"></script>
 </head>
 <body>
 
@@ -32,7 +33,7 @@
 
                 <!-- 상단바 오른쪽 아이콘 -->
                 <div class="right">
-                    <button class="car_info-btn">
+                    <button id="carIconBtn" class="car_info-btn">
                         <img src="/icon/car-side.png"/>
                     </button>
                     <button class="mypage-btn">
@@ -46,12 +47,45 @@
                 <h3>
                     송현우님의 차량
                 </h3>
-                <br/>
+                <!-- <br/>
                 <h2>
                     <img src="/icon/car.png" class="car-icon"/>
                     아반떼 (2024)
-                </h2>
+                </h2> -->
+                <div class="car-header" id="carHeader">
+                  <img id="carImage" src="/icon/그랜저1.jpg" alt="차 이미지" />
+                  <div class="car-header-info">
+                    <h2 id="carModel">2024 그랜저</h2>
+                    <p id="carFuel">가솔린</p>
+                    <p id="carEfficiency">11km/L</p>
+                  </div>
+                </div>
             </div>
+
+      <!-- 차량 정보 입력 모달 -->
+      <div id="carModal">
+        <div class="modal-content">
+          <h3>차량 정보 입력</h3>
+          <img id="modalCarImage" src="" alt="차 이미지" />
+          <select id="modalCar">
+            <option value="" disabled selected>차종 선택</option>
+            <option value="avante">2024 아반떼</option>
+            <option value="sorento">2024 쏘렌토</option>
+            <option value="grandeur">2024 그랜저</option>
+          </select>
+          <select id="modalFuel">
+            <option value="" disabled selected>유종 선택</option>
+            <option value="가솔린">가솔린</option>
+            <option value="디젤">디젤</option>
+          </select>
+          <div class="unit-group">
+            <input type="number" id="modalEfficiency" placeholder="연비 입력" />
+            <span>km/L</span>
+          </div>
+          <button onclick="saveCarInfo()">저장</button>
+          <button onclick="closeModal()">닫기</button>
+        </div>
+      </div> 
          
       <div class="nav-buttons">
         <button onclick="fullpage_api.moveTo(2)">
