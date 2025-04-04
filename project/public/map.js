@@ -38,10 +38,22 @@ function placesSearchCB(data, status) {
 
 function displayPlaces(places) {
   removeMarkers();
-  for (let i = 0; i < places.length; i++) {
-    const position = new kakao.maps.LatLng(places[i].y, places[i].x);
-    const marker = new kakao.maps.Marker({ position, map });
-
+  
+     // 주유소 마커에 사용할 아이콘 정의
+     const markerImage = new kakao.maps.MarkerImage(
+      "/icon/gas-station(red).png",         // public/icon 폴더에 저장한 아이콘 경로
+      new kakao.maps.Size(27, 27),          // 아이콘 크기
+      { offset: new kakao.maps.Point(16, 32) } // 기준점 (가운데 아래)
+    );
+  
+    for (let i = 0; i < places.length; i++) {
+      const position = new kakao.maps.LatLng(places[i].y, places[i].x);
+      // 주유소 마커에 이미지 옵션 추가
+      const marker = new kakao.maps.Marker({
+          position,
+          map,
+          image: markerImage  // ← 여기에 이미지 적용!
+        }); 
     markers.push(marker);
 
     kakao.maps.event.addListener(marker, 'click', () => {
