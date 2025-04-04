@@ -13,41 +13,64 @@
 
   <div class="mobile-frame">
     <div id="fullpage">
+      <!-- ✅ 1. 첫 화면 - 차량 정보 -->
       <div class="section">
-        <div class="wrapper">
-          <h2>🚗 아반떼 가솔린 (2024)</h2>
-          <p>주행거리: 49,961km</p>
-          <div class="nav-buttons">
-            <button onclick="fullpage_api.moveTo(2)">⛽ 최저가 보기</button>
-            <button onclick="fullpage_api.moveTo(3)">📍 근처 최저가</button>
-            <button onclick="fullpage_api.moveTo(4)">📊 차계부</button>
-          </div>
-        </div>
+        <div class="wrapper dashboard">
+             <!-- ✅ 상단 바 -->
+            <div class="top-bar">
+                <div class="left">
+                    <button class="menu-btn">
+                        <img src="/icon/menu.png"/>
+                    </button>
+                </div>
+                <div class="left-text">
+                    <h3>
+                        송현우님의 차량
+                    </h3>
+                    <br/>
+                    <h2>
+                        <img src="/icon/car.png" class="car-icon"/>
+                        아반떼 (2024)
+                    </h2>
+                </div>
+                <div class="right">
+                <button class="mypage-btn">
+                    <img src="/icon/people.png"/>
+                </button>
+                </div>
+            </div>
+         
+      <div class="nav-buttons">
+        <button onclick="fullpage_api.moveTo(2)">
+            <img src="/icon/gas-pump.png" class="nav-icon"/>
+            최저가 보기
+        </button>
+        <button onclick="fullpage_api.moveTo(3)">
+            <img src="/icon/location.png" class="nav-icon"/>
+            근처 최저가
+        </button>
+        <button onclick="fullpage_api.moveTo(4)">
+            <img src="/icon/calendar.png" class="nav-icon"/>
+             차계부
+        </button>
       </div>
+    </div>
+  </div>
+
+    <div class="section">
+      <div class="wrapper">
+        <h2>⛽ 추천 주유소</h2>
+        <p>광주광역시 북구 근처</p>
+        <ul>
+          <li>1. A 셀프주유소 – 1,490원</li>
+          <li>2. B GS칼텍스 – 1,520원</li>
+          <li>3. C SK에너지 – 1,540원</li>
+        </ul>
+      </div>
+    </div>
+
 
       <div class="section">
-        <div class="wrapper">
-          <h2>⛽ 추천 주유소</h2>
-          <p>광주광역시 북구 근처</p>
-          <ul>
-            <li>1. A 셀프주유소 – 1,490원</li>
-            <li>2. B GS칼텍스 – 1,520원</li>
-            <li>3. C SK에너지 – 1,540원</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="section">
-        <!-- <div class="wrapper">
-          <h2>📍 근처 최저가</h2>
-          <p>가장 가까운 주유소 정보 표시</p>
-          <ul>
-            <li>📍 A주유소 (0.3km) - 휘발유: 1,490원</li>
-            <li>주소: 광주광역시 북구 풍향동</li>
-            <li>☎ 062-123-4567</li>
-          </ul>
-        </div> -->
-         <!-- 방금추가 위치기반 반경 주유소 -->
          <div class="map_wrap">
             <h2>📍 내 위치 근처 주유소</h2>
             <p>현재 위치를 기반으로 주변 주유소를 찾습니다.</p>

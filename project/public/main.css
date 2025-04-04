@@ -37,7 +37,7 @@ body {
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -57,7 +57,7 @@ p {
 }
 
 /* 버튼 그룹 */
-.nav-buttons {
+/* .nav-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,19 +65,43 @@ p {
   margin-top: 2rem;
   width: 100%;
   max-width: 340px;
+} */
+.nav-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  padding: 0.6rem 0;
+  border-top: 1px solid #ddd;
 }
 
+
 /* 버튼 크기 줄이기 */
-.nav-buttons button {
+/* .nav-buttons button {
   flex: 1;
   padding: 0.6rem 0.5rem;
   font-size: 0.9rem;
   white-space: nowrap;
+} */
+.nav-buttons button {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  color: #151616;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  cursor: pointer;
 }
 
-
-.nav-buttons button:hover {
-  background: #0c7ed5;
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 3px;
 }
 
 /* 리스트 */
@@ -125,6 +149,57 @@ ul li {
   z-index: 9999;
 }
 
+/* ✅ 상단 바 전체 */
+.top-bar {
+  width: 100%;
+  background-color: #ecedee;
+  color: rgb(5, 5, 5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  font-weight: bold;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.top-bar h2{
+  color: rgb(2, 2, 2);
+}
+
+
+.top-bar .left, .top-bar .right {
+  display: flex;
+  height: 100%;
+  margin-bottom: 70px;
+}
+
+.left-text {
+  font-size: 1rem;
+}
+
+
+.menu-btn, .mypage-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.mypage-btn img, .menu-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.car-icon {
+  width: 24px;
+  height: 30px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
 
 
 
