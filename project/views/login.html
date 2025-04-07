@@ -43,6 +43,7 @@
 
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,6 +51,7 @@
   <link rel="stylesheet" href="/login.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 </head>
+
 <body>
   <div class="wrapper">
     <div class="container">
@@ -84,12 +86,12 @@
       <div id="joinPopup" class="popup-wrapper">
         <div class="popup-box">
           <h2>회원가입이 완료 되었습니다.</h2>
-            <p>로그인 후 <strong>차밥</strong>을 마음껏 이용해보세요!🎉<br /> 감사합니다.</p>
-        <div class="btns">
-          <a href="/login" class="btn">로그인</a>
+          <p>로그인 후 <strong>차밥</strong>을 마음껏 이용해보세요!🎉<br /> 감사합니다.</p>
+          <div class="btns">
+            <a href="/login" class="btn">로그인</a>
+          </div>
         </div>
-    </div>
-    </div>
+      </div>
 
       <!-- 오버레이 -->
       <div class="overlay-container">
@@ -120,12 +122,12 @@
       container.classList.remove("right-panel-active");
     });
 
-  // 회원가입 성공 여부 확인
-  const urlParams = new URLSearchParams(window.location.search);
+    // 회원가입 성공 여부 확인
+    const urlParams = new URLSearchParams(window.location.search);
 
-  if (urlParams.get("joined") === "true") {
-    document.getElementById("joinPopup").style.display = "flex";
-  }
+    if (urlParams.get("joined") === "true") {
+      document.getElementById("joinPopup").style.display = "flex";
+    }
 
     // 로그인 실패 시 메시지 표시
     const query = new URLSearchParams(window.location.search);
@@ -137,4 +139,5 @@
     }
   </script>
 </body>
+
 </html>
