@@ -62,9 +62,8 @@
 
           <input type="text" name="id" placeholder="ID" required />
           <input type="password" name="pw" placeholder="PW" required />
-          <p class="login-error" id="loginError">로그인 실패. 아이디 또는 비밀번호를 확인하세요.</p>
-
           <button class="form_btn" type="submit">Log In</button>
+          <p class="login-error" id="loginError">로그인 실패. 아이디 또는 비밀번호를 확인하세요.</p>
         </form>
       </div>
 
@@ -80,6 +79,17 @@
           <button class="form_btn" type="submit">JOIN</button>
         </form>
       </div>
+
+      <!-- 회원가입 완료 팝업 -->
+      <div id="joinPopup" class="popup-wrapper">
+        <div class="popup-box">
+          <h2>회원가입이 완료 되었습니다.</h2>
+            <p>로그인 후 <strong>차밥</strong>을 마음껏 이용해보세요!🎉<br /> 감사합니다.</p>
+        <div class="btns">
+          <a href="/login" class="btn">로그인</a>
+        </div>
+    </div>
+    </div>
 
       <!-- 오버레이 -->
       <div class="overlay-container">
@@ -109,6 +119,13 @@
     signInBtn.addEventListener("click", () => {
       container.classList.remove("right-panel-active");
     });
+
+  // 회원가입 성공 여부 확인
+  const urlParams = new URLSearchParams(window.location.search);
+
+  if (urlParams.get("joined") === "true") {
+    document.getElementById("joinPopup").style.display = "flex";
+  }
 
     // 로그인 실패 시 메시지 표시
     const query = new URLSearchParams(window.location.search);

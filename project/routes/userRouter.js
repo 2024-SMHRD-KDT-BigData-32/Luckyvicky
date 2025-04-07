@@ -23,7 +23,7 @@ router.post("/login", (req, res) => {
             res.redirect("/")
         } else {
             console.log("로그인 실패");
-            res.send("<script>alert('로그인 실패'); location.href='/login';</script>");
+            res.redirect("/login?error=login"); // 로그인 실패 시 에러 메세지 출력
         }
     })
 })
@@ -44,7 +44,9 @@ router.post("/join", (req, res) => {
       console.error("회원가입 실패:", err);
       return res.status(500).send("서버 오류");
     }
-    res.send("<script>alert('회원가입 완료!'); location.href='/login';</script>");
+   // res.send("<script>alert('회원가입 완료!'); location.href='/login';</script>");
+   // ✅ 팝업을 띄우기 위한 쿼리 파라미터 전달
+   res.redirect("/login?joined=true");
   });
 });
 
