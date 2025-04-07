@@ -31,21 +31,22 @@ router.post("/login", (req, res) => {
 
 // 회원가입 로직
 router.post("/join", (req, res) => {
-    let { user_id, user_pw, user_name, user_email, user_phone, user_car_info, user_role } = req.body;
-    let joined_at = new Date();
-    let sql = `
-      INSERT INTO tb_user (user_id, user_pw, user_name, user_email, user_phone, user_car_info, user_role, joined_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  let { user_id, user_pw, user_name, user_email, user_phone } = req.body;
+  let joined_at = new Date(); // 또는 NOW()
+
+  let sql = `
+      INSERT INTO tb_user (user_id, user_pw, user_name, user_email, user_phone, user_role, joined_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
-  
-    conn.query(sql, [user_id, user_pw, user_name, user_email, user_phone, user_car_info, user_role, joined_at], (err, result) => {
-      if (err) {
-        console.error("회원가입 실패:", err);
-        return res.status(500).send("서버 오류");
-      }
-      res.send("<script>alert('회원가입 완료!'); location.href='/login';</script>");
-    });
+
+  conn.query(sql, [user_id, user_pw, user_name, user_email, user_phone, "USER", joined_at], (err, result) => {
+    if (err) {
+      console.error("회원가입 실패:", err);
+      return res.status(500).send("서버 오류");
+    }
+    res.send("<script>alert('회원가입 완료!'); location.href='/login';</script>");
   });
+});
 
   // 로그아웃 로직
   router.post("/logout", (req, res) => {
