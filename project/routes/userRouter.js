@@ -17,7 +17,7 @@ router.post("/login", (req, res) => {
 
         if(rows.length > 0) {
             console.log("로그인성공");
-            req.session.nick = rows[0].user_name;
+            req.session.user_name = rows[0].user_name;
             req.session.email = rows[0].user_email;
             req.session.user_id = rows[0].user_id;
             res.redirect("/")
