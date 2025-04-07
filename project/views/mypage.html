@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=375, user-scalable=no" />
+  <title>마이페이지</title>
+  <link rel="stylesheet" href="/main.css" />
+  <style>
+    .mypage-container {
+        padding: 2rem;
+        max-width: 375px;
+        margin: 0 auto;
+    }
+
+    .mypage-container h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .mypage-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .mypage-container label {
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .mypage-container input,
+    .mypage-container select {
+        padding: 0.8rem;
+        border: 1px solid #ccc;
+        /* border-radius: 8px; */
+    }
+
+    .mypage-container button {
+        padding: 0.7rem;
+        background-color: #050505;
+        color: white;
+        border: none;
+        /* border-radius: 8px; */
+        cursor: pointer;
+    }
+
+    .mypage-container button:hover {
+        background-color: #111111;
+    }
+
+    .button-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 1rem;
+    justify-content: space-between;
+    }
+
+    .button-row form,
+    .button-row button {
+    flex: 1;
+    }
+
+    .button-row button {
+    padding: 0.7rem;
+    background-color: black;
+    color: white;
+    border: none;
+    /* border-radius: 8px; */
+    cursor: pointer;
+    font-weight: bold;
+    }
+
+    .button-row button:hover {
+    background-color: #444;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div class="mobile-frame">
+    <div class="mypage-container">
+      <br><br>
+      <h2>마이페이지</h2>
+      <br>
+      <form action="/user/update" method="post">
+        <label>아이디</label>
+
+        <input type="text" name="user_id" value="{{ user.user_id }}" readonly />
+
+        <label>비밀번호</label>
+        <input type="password" name="user_pw" placeholder="변경할 비밀번호" />
+
+        <label>비밀번호 확인</label>
+        <input type="password" name="user_pw_confirm" placeholder="비밀번호 다시 입력" />
+
+        <label>이름</label>
+        <input type="text" name="user_name" value="{{ user.user_name }}" />
+
+        <label>이메일</label>
+        <input type="email" name="user_email" value="{{ user.user_email }}" />
+
+        <label>전화번호</label>
+        <input type="tel" name="user_phone" value="{{ user.user_phone }}" />
+        
+        <button type="submit">회원 정보 수정</button>
+      </form>
+        <br>
+        <div class="button-row">
+            <!-- 뒤로가기 버튼 -->
+            <button type="submit" onclick="location.href='/'">뒤로가기</button>
+            <!-- 로그아웃 버튼 -->
+            <form action="/user/logout" method="post">
+                <button type="submit">로그아웃</button>
+            </form>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

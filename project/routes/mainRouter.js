@@ -12,5 +12,10 @@ router.get("/login", (req,res)=>{
     res.render("login")
 })
 
+// 마이페이지 이동
+router.get("/mypage", (req,res)=>{
+    res.render("mypage")
+})
+
 
 module.exports = router;
