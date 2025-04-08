@@ -42,15 +42,18 @@ body {
 }
 
 .nav-buttons {
-  position: absolute;
+  position: fixed; /* 기존 absolute → fixed로 변경 */
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
+  max-width: 500px; /* 모바일 프레임 크기에 맞춤 */
   display: flex;
   justify-content: space-around;
   background: #fff;
   padding: 0.6rem 0;
   border-top: 1px solid #ddd;
+  z-index: 9999;
 }
 
 .nav-buttons button {
@@ -102,23 +105,6 @@ p {
   font-size: 1rem;
   color: #555;
   margin-bottom: 1rem;
-}
-
-/* 화살표 버튼 */
-.scroll-up {
-  position: absolute;
-  bottom: 2.8rem;
-  right: 2rem;
-  width: 40px;
-  height: 40px;
-  background: #1e90ff;
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 1.4rem;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 999;
 }
 
 /* fullPage.js 네비게이션 위치 조정 */
@@ -221,25 +207,169 @@ p {
 
 
 
-/* ----------------------------------지도 css-------------------------------------- */
+/* ------------------ 세션3 내 위치 근처 최저가 주유소 페이지 ------------------------*/
+/* 상단바 스타일 */
+.map-header {
+  background-color: #010911;
+  color: #ffffff;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;  /* 아이콘 위치 조정 */
+  padding: 0 1rem;
+  text-align: center;
+}
 
+/* 홈 이동 버튼 */
+.angle_up-btn {
+  position: absolute;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.angle_up-btn img {
+  width: 25px;
+  height: 25px;
+}
+
+/* 제목 및 설명 텍스트 가운데 정렬 */
+.map-header-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-header-text h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.3rem;
+}
+
+.map-header-text p {
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.section3-icon{
+  width: 20px;
+  height: 20px;
+}
+
+/* -------------------지도 css------------------------- */
 /* 지도 컨테이너 */
-.map_wrap { width: 500px; height: 700px; }
-#category { list-style: none; padding: 0; margin: 10px 0; }
-#category li { display: inline-block; padding: 10px; background: #ddd; cursor: pointer; }
-#category li.on { background: #ff6600; color: white; }
+.map_wrap {
+  position: relative; /* 패널 기준점 */
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-area {
+  width: 100%;
+  height: 75vh; /* 추가: 전체 높이 채우기 */
+}
 
 /* 커스텀 오버레이 스타일 */
 .info-window {
-    background: white;
-    padding: 10px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  transform: translateY(-10px);
+}
+
+/* 지도 밑 패널 */
+.station-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(60%);
+  transition: transform 0.5s ease;
+  z-index: 1000;
+  padding: 2rem;
+  -webkit-overflow-scrolling: touch; /* 모바일에서 부드러운 스크롤 */
+}
+
+.station-list-scroll {
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 70px;
+}
+
+/* 패널 활성화 시 올라오도록 */
+.station-panel.show {
+  transform: translateY(0);
 }
 
 
+/* 상단 드래그 핸들 */
+.handle {
+  width: 40px;
+  height: 4px;
+  background: #ccc;
+  border-radius: 2px;
+  margin: 0 auto 10px;
+  cursor: pointer;
+}
+
+/* 주유소 카드 스타일 */
+.station-card {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.station-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.station-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0.2rem 0;
+}
+
+/* 거리선택 필터*/
+.distance-filter {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+  gap: 8px;
+  align-items: center;
+}
+
+.distance-filter label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.distance-filter select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
 /* --------------------------------------------------------------------------------- */
 
 /* 상단 차량 모달 */
