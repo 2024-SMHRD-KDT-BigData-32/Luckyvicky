@@ -15,6 +15,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // post 데이터 처리 등록
 app.use(bp.urlencoded({extended : true}));
 
+// JSON 데이터 파싱
+app.use(express.json()); 
+
 
 // 세션 설정
 app.use(session({

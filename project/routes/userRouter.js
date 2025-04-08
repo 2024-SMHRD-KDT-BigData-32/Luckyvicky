@@ -5,27 +5,49 @@ const conn = require("../config/db")
 
 // 로그인 로직
 router.post("/login", (req, res) => {
-    let { id, pw } = req.body;
-    let sql = "select * from tb_user where user_id = ? and user_pw = ?"
+  let { id, pw } = req.body;
+  let sql = "select * from tb_user where user_id = ? and user_pw = ?"
 
-    conn.query(sql, [id, pw], (err, rows) => {
+  conn.query(sql, [id, pw], (err, rows) => {
 
-        if (err) {
-            console.error("쿼리 에러:", err);
-            return res.status(500).send("서버 오류");
+    if (err) {
+      console.error("쿼리 에러:", err);
+      return res.status(500).send("서버 오류");
+    }
+
+    if (rows.length > 0) {
+      console.log("로그인성공");
+      req.session.user_id = rows[0].user_id;
+      req.session.email = rows[0].user_email;
+      req.session.user_name = rows[0].user_name;
+
+      // 차량 정보도 함께 조회해서 세션에 저장
+      const carSql = `
+        SELECT * FROM tb_car 
+        WHERE user_id = ? 
+        ORDER BY car_id DESC 
+        LIMIT 1
+      `;
+      conn.query(carSql, [rows[0].user_id], (err2, carRows) => {
+        if (err2) {
+          console.error("❌ 차량 정보 조회 실패:", err2);
+          return res.redirect("/"); // 차량 정보 없이도 메인 진입
         }
 
-        if(rows.length > 0) {
-            console.log("로그인성공");
-            req.session.user_name = rows[0].user_name;
-            req.session.email = rows[0].user_email;
-            req.session.user_id = rows[0].user_id;
-            res.redirect("/")
-        } else {
-            console.log("로그인 실패");
-            res.redirect("/login?error=login"); // 로그인 실패 시 에러 메세지 출력
+        if (carRows.length > 0) {
+          req.session.car_model = carRows[0].car_model;
+          req.session.fuel_type = carRows[0].fuel_type;
+          req.session.fuel_efficiency = carRows[0].fuel_efficiency;
         }
-    })
+
+        return res.redirect("/");
+      });
+
+    } else {
+      console.log("로그인 실패");
+      res.redirect("/login?error=login"); // 로그인 실패 시 에러 메세지 출력
+    }
+  })
 })
 
 
@@ -45,7 +67,7 @@ router.post("/join", (req, res) => {
       return res.status(500).send("서버 오류");
     }
    // res.send("<script>alert('회원가입 완료!'); location.href='/login';</script>");
-   // ✅ 팝업을 띄우기 위한 쿼리 파라미터 전달
+   // 팝업을 띄우기 위한 쿼리 파라미터 전달
    res.redirect("/login?joined=true");
   });
 });
@@ -74,6 +96,7 @@ router.post("/join", (req, res) => {
             return res.status(500).send("서버 오류");
         }
   
+        // 로그인 시, 마이페이지 이동
         if (rows.length > 0) {
             res.render("mypage", { user: rows[0] });
         } else {
@@ -113,6 +136,39 @@ router.post("/join", (req, res) => {
       res.send("<script>alert('회원 정보가 수정되었습니다.'); location.href='/user/mypage';</script>");
     });
   });
-  
+
+
+// 차량 정보 등록 라우터
+router.post("/carinfo", (req, res) => {
+
+  console.log("💬 차량 등록 요청 시 user_id:", req.session.user_id);
+  console.log("💬 요청 바디:", req.body);
+
+  // 세션에서 user_id 추출
+  const user_id = req.session.user_id;
+  const { car_model, fuel_type, fuel_efficiency } = req.body;
+
+  const sql = `
+      INSERT INTO tb_car (user_id, car_model, fuel_type, fuel_efficiency)
+      VALUES (?, ?, ?, ?)
+    `;
+
+  conn.query(sql, [user_id, car_model, fuel_type, fuel_efficiency], (err, result) => {
+    if (err) {
+      console.error("차량 정보 저장 실패:", err);
+      return res.status(500).send("DB 오류");
+    }
+
+    // 세션 갱신 (자동 반영)
+    req.session.car_model = car_model;
+    req.session.fuel_type = fuel_type;
+    req.session.fuel_efficiency = fuel_efficiency;
+
+    console.log("✅ 차량 정보 저장 완료");
+    return res.json({ success: true });
+
+  });
+});  
+
   
 module.exports = router;

@@ -489,3 +489,23 @@ p {
   display: inline;
   margin-right: 10px;
 }
+
+/* 차량 정보 등록 시 메시지 */
+.toast {
+  position: fixed;
+  bottom: 120px;
+  /* top: 200px; */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(33, 33, 33, 0.9);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-size: 14px;
+  opacity: 0;
+  z-index: 9999;
+  transition: opacity 0.3s ease-in-out;
+}
+.toast.show {
+  opacity: 1;
+}

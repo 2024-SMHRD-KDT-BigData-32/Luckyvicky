@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=375, user-scalable=no" />
@@ -9,103 +10,125 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
   <link rel="stylesheet" href="/main.css" />
   <script defer src="../carinfo.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
 
   <div class="mobile-frame">
     <div id="fullpage">
-     <!-- 1. 첫 화면 - 차량 정보 -->
+      <!-- 1. 첫 화면 - 차량 정보 -->
       <div class="section">
         <div class="wrapper dashboard">
-            <!-- 상단 바 -->
-            <div class="top-bar">
-                <!-- 상단바 왼쪽 아이콘 -->
-                <div class="left">
-                    <button class="menu-btn">
-                        <img src="/icon/menu.png"/>
-                    </button>
-                </div>
-                
-                <!-- 상단바 중앙 로고 부분-->
-                <div class="center-logo">
-                    <img src="/icon/charbob_logo.png" />
-                </div>
-
-                <!-- 상단바 오른쪽 아이콘 -->
-                <div class="right">
-                    <button id="carIconBtn" class="car_info-btn">
-                        <img src="/icon/car-side.png"/>
-                    </button>
-                    <button class="mypage-btn" onclick="location.href='/user/mypage'">
-                      <img src="/icon/user.png"/>
-                  </button>
-                </div>
+          <!-- 상단 바 -->
+          <div class="top-bar">
+            <!-- 상단바 왼쪽 아이콘 -->
+            <div class="left">
+              <button class="menu-btn">
+                <img src="/icon/menu.png" />
+              </button>
             </div>
 
-            <!-- 첫페이지 본문 -->
-            <div class="car-summary">
-                <h3>
-                  {{user_name}}님의 차량
-                </h3>
-                
-                <div class="car-header" id="carHeader">
-                  <img id="carImage" src="/icon/그랜저1.jpg" alt="차 이미지" />
-                  <div class="car-header-info">
-                    <h2 id="carModel">2024 그랜저</h2>
-                    <p id="carFuel">가솔린</p>
-                    <p id="carEfficiency">11km/L</p>
-                  </div>
-                </div>
+            <!-- 상단바 중앙 로고 부분-->
+            <div class="center-logo">
+              <img src="/icon/charbob_logo.png" />
             </div>
 
-      <!-- 차량 정보 입력 모달 -->
-      <div id="carModal">
-        <div class="modal-content">
-          <h3>차량 정보 입력</h3>
-          <img id="modalCarImage" src="" alt="차 이미지" />
-          <select id="modalCar">
-            <option value="" disabled selected>차종 선택</option>
-            <option value="avante">2024 아반떼</option>
-            <option value="sorento">2024 쏘렌토</option>
-            <option value="grandeur">2024 그랜저</option>
-          </select>
-          <select id="modalFuel">
-            <option value="" disabled selected>유종 선택</option>
-            <option value="가솔린">가솔린</option>
-            <option value="디젤">디젤</option>
-          </select>
-          <div class="unit-group">
-            <input type="number" id="modalEfficiency" placeholder="연비 입력" />
-            <span>km/L</span>
+            <!-- 상단바 오른쪽 아이콘 -->
+            <div class="right">
+              <button id="carIconBtn" class="car_info-btn">
+                <img src="/icon/car-side.png" />
+              </button>
+              <button class="mypage-btn" onclick="location.href='/user/mypage'">
+                <img src="/icon/user.png" />
+              </button>
+            </div>
           </div>
-          <button onclick="saveCarInfo()">저장</button>
-          <button onclick="closeModal()">닫기</button>
+
+          <!-- 첫페이지 본문 -->
+          <div class="car-summary">
+            <h3 id="carSummaryText">
+              {% if isLoggedIn %}
+              {% if hasCarInfo %}
+              {{ user_name }}님의 차량
+              {% else %}
+              차량 등록이 필요합니다
+              {% endif %}
+              {% else %}
+              환영합니다 차밥 싹싹김치
+              {% endif %}
+            </h3>
+
+            <div class="car-header" id="carHeader">
+              <img id="carImage" src="/car/{% if hasCarInfo %}{{ car_model }}1.jpg{% else %}default_car.png{% endif %}"
+                alt="차 이미지" />
+              <div class="car-header-info">
+                <!-- <h2 id="carModel">{{ car_model }}</h2>
+                  <p id="carFuel">{{ fuel_type }}</p>
+                  <p id="carEfficiency">{{ fuel_efficiency }}km/L</p> -->
+                {% if hasCarInfo %}
+                <h2 id="carModel">{{ car_model }}</h2>
+                <p id="carFuel">{{ fuel_type }}</p>
+                <p id="carEfficiency">{{ fuel_efficiency }}km/L</p>
+                {% else %}
+                <h2 id="carModel">차량 등록하기</h2>
+                <p id="carFuel"></p>
+                <p id="carEfficiency"></p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <!-- 차량 정보 입력 모달 -->
+          <div id="carModal">
+            <div class="modal-content">
+              <h3>차량 정보 입력</h3>
+              <img id="modalCarImage" src="" alt="차 이미지" />
+
+              <div id="carInfoForm">
+                <select id="modalCar" name="car_model">
+                  <option value="" disabled selected>차종 선택</option>
+                  <option value="Avante">2024 아반떼CN7</option>
+                  <option value="Sorento">2024 쏘렌토</option>
+                  <option value="Grandeur">2024 그랜저</option>
+                </select>
+                <select id="modalFuel" name="fuel_type">
+                  <option value="" disabled selected>유종 선택</option>
+                  <option value="가솔린">휘발유</option>
+                  <option value="디젤">경유</option>
+                </select>
+                <div class="unit-group">
+                  <input type="number" id="modalEfficiency" name="fuel_efficiency" placeholder="연비 입력" />
+                  <span>km/L</span>
+                </div>
+                <button type="button" onclick="saveCarInfo()">저장</button>
+                <button type="button" onclick="closeModal()">닫기</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div> 
-         
-    </div>
-  </div>
-
-  <!-- 섹션 2 최적의 주유소 추천-->
-    <div class="section">
-      <div class="wrapper">
-        <h2>⛽ 추천 주유소</h2>
-        <p>광주광역시 북구 근처</p>
-        <ul>
-          <li>1. A 셀프주유소 – 1,490원</li>
-          <li>2. B GS칼텍스 – 1,520원</li>
-          <li>3. C SK에너지 – 1,540원</li>
-        </ul>
       </div>
-    </div>
+
+      <!-- 섹션 2 최적의 주유소 추천-->
+      <div class="section">
+        <div class="wrapper">
+          <h2>⛽ 추천 주유소</h2>
+          <p>광주광역시 북구 근처</p>
+          <ul>
+            <li>1. A 셀프주유소 – 1,490원</li>
+            <li>2. B GS칼텍스 – 1,520원</li>
+            <li>3. C SK에너지 – 1,540원</li>
+          </ul>
+        </div>
+      </div>
 
 
-     <!-- 섹션 3 내 위치 기반 주유소 찾기-->
-     <div class="section">
-      <div class="map_wrap">
+      <!-- 섹션 3 내 위치 기반 주유소 찾기-->
+      <div class="section">
+        <div class="map_wrap">
           <div class="map-header">
-             <!-- 상단바 왼쪽 홈으로 이동 버튼 추가 -->
-             <button class="angle_up-btn" onclick="fullpage_api.moveTo(1)">
+            <!-- 상단바 왼쪽 홈으로 이동 버튼 추가 -->
+            <button class="angle_up-btn" onclick="fullpage_api.moveTo(1)">
               <img src="/icon/angle-up.png" alt="화살표 아이콘" />
             </button>
 
@@ -116,8 +139,8 @@
               </h2>
               <p>현재 위치 기반 선택 반경 이내 주유소를 표시해줍니다.</p>
             </div>
-          </div>  
-      
+          </div>
+
           <!-- 지도 div -->
           <div id="map" class="map-area"></div>
 
@@ -132,38 +155,41 @@
                 <option value="3000" selected>3km 이내</option>
               </select>
             </div>
-          
+
             <div id="stationList" class="station-list-scroll"></div>
           </div>
         </div>
       </div>
 
 
-        <!-- 섹션 4 차계부-->
-        <div class="section">
-            <div class="wrapper">
-            <h2>⛽ 차계부</h2>
-            <p>차계부 입력</p>
-            </div>
-        </div> 
+      <!-- 섹션 4 차계부-->
+      <div class="section">
+        <div class="wrapper">
+          <h2>⛽ 차계부</h2>
+          <p>차계부 입력</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 하단 고정 네비게이션 바-->
+    <div class="nav-buttons">
+      <button onclick="fullpage_api.moveTo(2)">
+        <img src="/icon/gas-pump.png" class="nav-icon" />
+        최저가 보기
+      </button>
+      <button onclick="fullpage_api.moveTo(3)">
+        <img src="/icon/location.png" class="nav-icon" />
+        근처 최저가
+      </button>
+      <button onclick="fullpage_api.moveTo(4)">
+        <img src="/icon/calendar.png" class="nav-icon" />
+        차계부
+      </button>
+    </div>
   </div>
 
-  <!-- 하단 고정 네비게이션 바-->
-  <div class="nav-buttons">
-    <button onclick="fullpage_api.moveTo(2)">
-        <img src="/icon/gas-pump.png" class="nav-icon"/>
-        최저가 보기
-    </button>
-    <button onclick="fullpage_api.moveTo(3)">
-        <img src="/icon/location.png" class="nav-icon"/>
-        근처 최저가
-    </button>
-    <button onclick="fullpage_api.moveTo(4)">
-        <img src="/icon/calendar.png" class="nav-icon"/>
-         차계부
-    </button>
-  </div>
-</div>
+  <div id="toast" class="toast">차량 정보가 저장되었습니다</div>
+
   <!-- fullpage.js script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
   <script>
@@ -174,8 +200,16 @@
       licenseKey: 'gplv3-license',
     });
   </script>
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=e6dfab2f13622dce81330992b5eff90a&libraries=services"></script>
+  <script
+    src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=e6dfab2f13622dce81330992b5eff90a&libraries=services"></script>
   <script src="/map.js"></script>
+
+  <script>
+    window.__IS_LOGGED_IN__ = "{{ isLoggedIn }}";
+    window.__USER_NAME__ = "{{ user_name }}";
+  </script>
   
+
 </body>
+
 </html>
