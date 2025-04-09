@@ -29,7 +29,7 @@ body {
 /* 섹션 콘텐츠 */
 .wrapper {
   width: 100%;
-  max-width: 375px;
+  /* max-width: 375px; */
   height: 100vh;
   margin: 0 auto;
   text-align: center;
@@ -42,12 +42,14 @@ body {
 }
 
 .nav-buttons {
-  position: fixed; /* 기존 absolute → fixed로 변경 */
+  position: fixed;
+  /* 기존 absolute → fixed로 변경 */
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 500px; /* 모바일 프레임 크기에 맞춤 */
+  max-width: 500px;
+  /* 모바일 프레임 크기에 맞춤 */
   display: flex;
   justify-content: space-around;
   background: #fff;
@@ -87,7 +89,7 @@ ul li {
   padding: 0.9rem 1rem;
   border-radius: 12px;
   font-size: 1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   text-align: left;
 }
 
@@ -107,11 +109,13 @@ p {
   margin-bottom: 1rem;
 }
 
+
 /* fullPage.js 네비게이션 위치 조정 */
 #fp-nav {
   position: fixed !important;
   top: 50% !important;
-  left: calc(50% + 250px); /* 모바일 프레임 너비 절반 만큼 우측 */
+  left: calc(50% + 250px);
+  /* 모바일 프레임 너비 절반 만큼 우측 */
   transform: translateY(-50%);
   z-index: 9999;
 }
@@ -120,23 +124,24 @@ p {
 
 /* 상단 바 */
 .top-bar {
-    width: 100%;
-    background-color: #010911;
-    color: rgb(112, 94, 94);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem 1rem;
-    /* 모서리 둥글게*/
-    /* border-bottom-left-radius: 12px;
+  width: 100%;
+  background-color: #010911;
+  color: rgb(112, 94, 94);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  /* 모서리 둥글게*/
+  /* border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px; */
-    position: absolute;
-    top: 0;
-    height: 80px;
+  position: absolute;
+  top: 0;
+  height: 80px;
 }
 
 /* 상단바 높이 조절 */
-.top-bar .left, .top-bar .right {
+.top-bar .left,
+.top-bar .right {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -150,17 +155,21 @@ p {
 }
 
 .center-logo img {
-  height: 100px; /* 필요시 조정 */
+  height: 100px;
+  /* 필요시 조정 */
   object-fit: contain;
 }
 
-.menu-btn, .mypage-btn, .car_info-btn {
+.menu-btn,
+.mypage-btn,
+.car_info-btn {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.mypage-btn img, .menu-btn img {
+.mypage-btn img,
+.menu-btn img {
   width: 24px;
   height: 24px;
 }
@@ -173,7 +182,8 @@ p {
 .top-bar .right {
   display: flex;
   align-items: center;
-  gap: 20px; /* 상단바 오른쪽 아이콘 사이 여백 */
+  gap: 20px;
+  /* 상단바 오른쪽 아이콘 사이 여백 */
 }
 
 
@@ -187,6 +197,7 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .car-icon {
@@ -207,6 +218,7 @@ p {
 
 
 
+
 /* ------------------ 세션3 내 위치 근처 최저가 주유소 페이지 ------------------------*/
 /* 상단바 스타일 */
 .map-header {
@@ -216,7 +228,8 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;  /* 아이콘 위치 조정 */
+  position: relative;
+  /* 아이콘 위치 조정 */
   padding: 0 1rem;
   text-align: center;
 }
@@ -256,7 +269,7 @@ p {
   margin: 0;
 }
 
-.section3-icon{
+.section3-icon {
   width: 20px;
   height: 20px;
 }
@@ -264,7 +277,8 @@ p {
 /* -------------------지도 css------------------------- */
 /* 지도 컨테이너 */
 .map_wrap {
-  position: relative; /* 패널 기준점 */
+  position: relative;
+  /* 패널 기준점 */
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -274,7 +288,8 @@ p {
 
 .map-area {
   width: 100%;
-  height: 75vh; /* 추가: 전체 높이 채우기 */
+  height: 75vh;
+  /* 추가: 전체 높이 채우기 */
 }
 
 /* 커스텀 오버레이 스타일 */
@@ -303,7 +318,8 @@ p {
   transition: transform 0.5s ease;
   z-index: 1000;
   padding: 2rem;
-  -webkit-overflow-scrolling: touch; /* 모바일에서 부드러운 스크롤 */
+  -webkit-overflow-scrolling: touch;
+  /* 모바일에서 부드러운 스크롤 */
 }
 
 .station-list-scroll {
@@ -370,6 +386,8 @@ p {
   border: 1px solid #ccc;
   font-size: 0.9rem;
 }
+
+
 /* --------------------------------------------------------------------------------- */
 
 /* 상단 차량 모달 */
@@ -465,6 +483,7 @@ p {
 /* 차량 정보 */
 .car-header {
   width: 100%;
+  max-width: 375px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -473,16 +492,19 @@ p {
   height: 100px;
   cursor: pointer;
 }
+
 .car-header img {
   width: 180px;
   height: auto;
   object-fit: contain;
   margin-right: 15px;
 }
+
 .car-header-info h2 {
   margin: 0;
   font-size: 16px;
 }
+
 .car-header-info p {
   margin: 2px 0;
   font-size: 14px;
@@ -506,6 +528,179 @@ p {
   z-index: 9999;
   transition: opacity 0.3s ease-in-out;
 }
+
 .toast.show {
   opacity: 1;
+}
+
+
+/* ---------------------------------------------- */
+/* 차계부 캘린더 및 차트 */
+/* 그래프 세션 */
+.dashboard-section {
+  width: 100%;
+  /* max-width: 375px; */
+  height: calc(100vh - 60px);
+  /* 탭바가 60px이라 가정 */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.3rem 0.3rem 0.6rem;
+  box-sizing: border-box;
+  justify-content: flex-start;
+  /* ✅ space-between 제거 */
+}
+
+.dashboard-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 4px;
+  flex: 1;
+  font-size: 0.8rem;
+  color: #333;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card strong {
+  font-size: 0.8rem;
+  color: #1e90ff;
+}
+
+.dashboard-chart-box {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 6px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  /* ✅ 그래프 박스를 균등하게 분배 */
+  min-height: 12vh;
+  /* ✅ 필요 최소 높이 */
+  max-height: 15.5vh;
+}
+
+.dashboard-chart-box h4 {
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+  color: #333;
+}
+
+.dashboard-chart-box canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100%;
+  /* ✅ 부모 안에서만 그려지게 */
+}
+
+/* 대시보드 맨 아래 유가 그래프 */
+/* 두 박스를 나란히 */
+.chart-row-2 {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%; /* ✅ 추가 */
+  margin-top: 8px;
+}
+
+/* 각각의 절반 박스 */
+.chart-half-box {
+  flex: 1;
+  min-width: 0; /* ✅ 강제로 줄바꿈 방지 */
+  background: white;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 캔버스 사이즈 */
+.chart-half-box canvas {
+  width: 100% !important;
+  height: 180px !important;
+}
+
+
+/* ------------다운이 캘린더------------ */
+.calendar-container {
+  width: 100%;
+  height: 100vh;
+  padding: 10px;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  overflow: hidden;
+  /* =전체 스크롤 없애기 */
+  gap: 8px;
+}
+
+#calendar {
+  height: auto;
+  padding: 8px;
+  background: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.chart-box {
+  background: white;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.chart-box canvas {
+  width: 100% !important;
+  height: 120px !important;
+}
+
+.chart-caption {
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+
+/* 모달 공통 */
+.modal {
+  display: none;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 12px;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.modal-buttons button {
+  margin: 5px;
+  padding: 8px 14px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }

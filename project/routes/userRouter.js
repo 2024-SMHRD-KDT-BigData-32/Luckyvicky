@@ -170,5 +170,58 @@ router.post("/carinfo", (req, res) => {
   });
 });  
 
+
+// 주유 기록 전체 조회
+router.get('/fuel/records', async (req, res) => {
+  const userId = req.session.user_id;
+  if (!userId) return res.status(401).json({ success: false, message: '로그인 필요' });
+
+  try {
+    const [records] = await conn.promise().query(
+      'SELECT date, station, price, efficiency FROM fuel_records WHERE user_id = ? ORDER BY date ASC',
+      [userId]
+    );
+    res.json({ success: true, records });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'DB 조회 오류' });
+  }
+});
+
+// 주유 기록 저장
+router.post('/fuel/save', async (req, res) => {
+  const userId = req.session.user_id;
+  const { date, station, price, efficiency } = req.body;
+  if (!userId) return res.status(401).json({ success: false, message: '로그인 필요' });
+
+  try {
+    await conn.promise().query(
+      'INSERT INTO fuel_records (user_id, date, station, price, efficiency) VALUES (?, ?, ?, ?, ?)',
+      [userId, date, station, price, efficiency]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'DB 저장 오류' });
+  }
+});
+
+// 주유 기록 삭제
+router.post('/fuel/delete', async (req, res) => {
+  const userId = req.session.user_id;
+  const { date, station, price } = req.body;
+  if (!userId) return res.status(401).json({ success: false, message: '로그인 필요' });
+
+  try {
+    await conn.promise().query(
+      'DELETE FROM fuel_records WHERE user_id = ? AND date = ? AND station = ? AND price = ?',
+      [userId, date, station, price]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'DB 삭제 오류' });
+  }
+});
   
 module.exports = router;

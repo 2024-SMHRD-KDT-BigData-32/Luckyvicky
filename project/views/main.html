@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=375, user-scalable=no" />
-  <title>추천 주유소</title>
+  <title>차밥</title>
 
   <!-- fullpage.js CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
@@ -59,13 +59,18 @@
               {% endif %}
             </h3>
 
+            <!-- <br/>
+                <h2>
+                    <img src="/icon/car.png" class="car-icon"/>
+                    아반떼 (2024)
+                </h2> -->
             <div class="car-header" id="carHeader">
               <img id="carImage" src="/car/{% if hasCarInfo %}{{ car_model }}1.jpg{% else %}default_car.png{% endif %}"
                 alt="차 이미지" />
               <div class="car-header-info">
                 <!-- <h2 id="carModel">{{ car_model }}</h2>
-                  <p id="carFuel">{{ fuel_type }}</p>
-                  <p id="carEfficiency">{{ fuel_efficiency }}km/L</p> -->
+                <p id="carFuel">{{ fuel_type }}</p>
+                <p id="carEfficiency">{{ fuel_efficiency }}km/L</p> -->
                 {% if hasCarInfo %}
                 <h2 id="carModel">{{ car_model }}</h2>
                 <p id="carFuel">{{ fuel_type }}</p>
@@ -77,7 +82,43 @@
                 {% endif %}
               </div>
             </div>
+
+
+            <!-- 📦 HTML 전체 구조 (차량 정보 섹션 내부에 포함) -->
+            <div class="dashboard-section">
+              <div class="dashboard-cards">
+                <div class="card">나의 평균 연비<br /><strong id="myAvgEfficiencyCard">-</strong></div>
+                <div class="card">평균 주유 주기<br /><strong id="avgIntervalCard">-</strong></div>
+                <div class="card">마지막 주유<br /><strong id="lastRefuelDateCard">-</strong><br /><small
+                    id="lastRefuelPrice">-</small></div>
+              </div>
+
+              <div class="dashboard-chart-box">
+                <h4>이번달 주유 그래프</h4>
+                <canvas id="monthlyFuelLineChart"></canvas>
+              </div>
+
+              <div class="dashboard-chart-box">
+                <h4>유가 추이</h4>
+                <canvas id="nearbyPriceBarChart"></canvas>
+              </div>
+
+              <div class="chart-row-2">
+                <div class="chart-half-box">
+                  <h4>주요 도시별 유가</h4>
+                  <canvas id="majorCityDonutChart"></canvas>
+                </div>
+                <div class="chart-half-box">
+                  <h4>근처 도시별 유가</h4>
+                  <canvas id="nearbyCityDonutChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+
           </div>
+
+
 
           <!-- 차량 정보 입력 모달 -->
           <div id="carModal">
@@ -109,10 +150,9 @@
         </div>
       </div>
 
-      <!-- 섹션 2 최적의 주유소 추천-->
       <div class="section">
         <div class="wrapper">
-          <h2>⛽ 추천 주유소</h2>
+          <h2>⛽ 최저가 주유소</h2>
           <p>광주광역시 북구 근처</p>
           <ul>
             <li>1. A 셀프주유소 – 1,490원</li>
@@ -162,13 +202,58 @@
       </div>
 
 
-      <!-- 섹션 4 차계부-->
+      <!-- 섹션 4 차계부 -->
       <div class="section">
-        <div class="wrapper">
-          <h2>⛽ 차계부</h2>
-          <p>차계부 입력</p>
+        <!-- 상단 바-->
+        <div class="map-header">
+          <button class="angle_up-btn" onclick="fullpage_api.moveTo(1)">
+            <img src="/icon/angle-up.png" alt="화살표 아이콘" />
+          </button>
+          <div class="map-header-text">
+            <h2>
+              <img src="/icon/calendar.png" alt="달력 아이콘" class="section3-icon" />
+              차계부
+            </h2>
+            <p>주유 기록을 관리해 보세요.</p>
+          </div>
+        </div>
+        <div class="calendar-container">
+          <div id="calendar"></div>
+
+          <div class="chart-box">
+            <p class="chart-caption">
+              <span id="monthSummary">이번달 주유금액: ₩0</span><br />
+              <span id="avgSummary">이번달 평균 연비: 0km/L</span>
+            </p>
+            <canvas id="fuelChart"></canvas>
+          </div>
+
+          <div class="chart-box">
+            <p id="monthlyAvgCaption" class="chart-caption">월별 평균 주유금액: ₩0</p>
+                      <!-- 평균 문구 밑에 비교 결과 표시용 -->
+          <div id="monthlyComparison" style="font-size: 0.85rem; margin-top: 4px;"></div>
+            <canvas id="monthlyChart"></canvas>
+          </div>
+
+
+        </div>
+
+        <!-- 모달 -->
+        <div class="modal" id="recordModal">
+          <div class="modal-content">
+            <h3>주유 기록</h3>
+            <input type="text" id="station" placeholder="주유소 이름" />
+            <input type="number" id="price" placeholder="주유 금액" />
+            <input type="number" id="efficiency" placeholder="연비 (km/L)" />
+            <div class="modal-buttons">
+              <button onclick="saveRecord()">저장</button>
+              <button onclick="deleteRecord()">삭제</button>
+              <button onclick="closeFuelModal()">닫기</button>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
 
     <!-- 하단 고정 네비게이션 바-->
@@ -188,6 +273,7 @@
     </div>
   </div>
 
+
   <div id="toast" class="toast">차량 정보가 저장되었습니다</div>
 
   <!-- fullpage.js script -->
@@ -198,17 +284,35 @@
       navigation: true,
       scrollHorizontally: false,
       licenseKey: 'gplv3-license',
+      afterRender: () => {
+        if (typeof updateDashboardStats === 'function') {
+          updateDashboardStats();
+        }
+      }
     });
   </script>
   <script
     src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=e6dfab2f13622dce81330992b5eff90a&libraries=services"></script>
   <script src="/map.js"></script>
 
+
+  <!-- <script>
+    const carModal = document.getElementById("carModal");
+    const carHeader = document.getElementById("carHeader");
+
+    carHeader.addEventListener("click", () => {
+      carModal.style.display = "block";
+    });
+  </script> -->
   <script>
     window.__IS_LOGGED_IN__ = "{{ isLoggedIn }}";
     window.__USER_NAME__ = "{{ user_name }}";
   </script>
-  
+
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/main.js"></script>
 
 </body>
 
