@@ -1,3 +1,4 @@
+window.addEventListener("DOMContentLoaded", function () {
 let map, ps, markers = [], placeOverlay;
 let userLocation;
 let currentRadius = 3000; // 기본 반경 3km
@@ -140,6 +141,9 @@ function deg2rad(deg) {
 
 // Geolocation API로 현재 위치를 받아옴
 window.onload = function () {
+  const mapEl = document.getElementById("map");
+  if (!mapEl) return; // map이 없으면 실행 안 함
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(initMap, () => {
       alert("위치 정보를 가져올 수 없습니다.");
@@ -147,8 +151,7 @@ window.onload = function () {
   } else {
     alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
   }
-
-}
+};
 
   // 리스트 패널 슬라이드
   const panel = document.querySelector(".station-panel");
@@ -248,3 +251,4 @@ window.onload = function () {
 });
 
 };
+});

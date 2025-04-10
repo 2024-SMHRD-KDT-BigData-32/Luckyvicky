@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=375, user-scalable=no" />
+  <meta name="viewport" content="width=375, user-scalable=no , initial-scale=1.0" />
   <title>차밥</title>
 
   <!-- fullpage.js CDN -->
@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="/main.css" />
   <script defer src="../carinfo.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="text/javascript"
+  src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=e6dfab2f13622dce81330992b5eff90a&libraries=services"></script>
+  
 </head>
 
 <body>
@@ -150,17 +153,45 @@
         </div>
       </div>
 
-      <div class="section">
-        <div class="wrapper">
-          <h2>⛽ 최저가 주유소</h2>
-          <p>광주광역시 북구 근처</p>
-          <ul>
-            <li>1. A 셀프주유소 – 1,490원</li>
-            <li>2. B GS칼텍스 – 1,520원</li>
-            <li>3. C SK에너지 – 1,540원</li>
-          </ul>
-        </div>
+
+<!-- 섹션 2 내 위치 지역 최저가 주유소 찾기-->
+<div class="section">
+  <div class="map_wrap">
+    <div class="map-header">
+      <!-- 상단바 왼쪽 홈으로 이동 버튼 추가 -->
+      <button class="angle_up-btn" onclick="fullpage_api.moveTo(1)">
+        <img src="/icon/angle-up.png" alt="화살표 아이콘" />
+      </button>
+
+      <div class="map-header-text">
+        <h2>
+          <img src="/icon/map-marker.png" alt="위치 아이콘" class="section2-icon" />
+          현재 위치 최저가 주유소
+        </h2>
+        <p>현재 위치 지역 최저가 주유소를 표시해줍니다.</p>
       </div>
+    </div>
+
+    <!-- 지도 div -->
+    <div id="map2" class="map-area"></div>
+
+    <!-- 지도 아래 주유소 리스트 패널 -->
+    <div id="stationPanel2" class="station-panel">
+      <div class="handle"></div>
+
+      <!-- 필터 제거됨 -->
+
+      <!-- 주유소 리스트 -->
+      <div id="station-list" class="station-list-scroll"></div>
+    </div>
+  </div>
+
+  <script>
+    window.onload = () => {
+      initMap(); // ✅ 페이지 로드시 지도 로드
+    };
+  </script>
+</div>
 
 
       <!-- 섹션 3 내 위치 기반 주유소 찾기-->
@@ -291,11 +322,18 @@
       }
     });
   </script>
-  <script
-    src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=e6dfab2f13622dce81330992b5eff90a&libraries=services"></script>
+ 
+  <script src="/kakamap.js"></script>
+  <script>
+    kakao.maps.load(() => {
+      initMap(); // kakamap.js의 initMap 호출
+    });
+  </script>
+
+  </script>
   <script src="/map.js"></script>
-
-
+  
+ 
   <!-- <script>
     const carModal = document.getElementById("carModal");
     const carHeader = document.getElementById("carHeader");
