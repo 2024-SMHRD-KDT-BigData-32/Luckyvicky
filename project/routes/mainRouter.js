@@ -17,16 +17,18 @@ router.get("/", (req, res) => {
       hasCarInfo
     });
   });
+  
 
 // 사용자가 로그인을 요청했을 때
 router.get("/login", (req,res)=>{
     res.render("login")
 })
 
-// 마이페이지 이동
-router.get("/mypage", (req,res)=>{
-    res.render("mypage")
+// 사용자가 차량 등록을 요청했을 때
+router.get("/carinfo", (req,res)=>{
+    res.render("carInfo")
 })
 
+  
 
 module.exports = router;

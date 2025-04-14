@@ -11,15 +11,18 @@
   "description": "",
   "dependencies": {
     "axios": "^1.8.4",
-    "chokidar": "^3.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "mysql2": "^3.14.0",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.7.0",
     "nunjucks": "^3.2.4",
     "proj4": "^2.15.0",
-    "session-file-store": "^1.5.0"
+    "session-file-store": "^1.5.0",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }

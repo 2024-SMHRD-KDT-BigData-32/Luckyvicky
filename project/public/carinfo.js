@@ -37,9 +37,49 @@ document.addEventListener('DOMContentLoaded', () => {
   const carEfficiency = document.getElementById("carEfficiency");
 
   const carImages = {
-    Avante: "/car/avante1.jpg",
-    Sorento: "/car/sorento1.jpg",
-    Grandeur: "/car/grandeur1.jpg"
+    Avante: "/car/Avante.png",
+    Sorento: "/car/sorento.png",
+    Grandeur: "/car/grandeur.png",
+    Sonata : "/car/Sonata.png",
+    SantaFe : "/car/SantaFe.png",
+    Tucson : "/car/Tucson.png",
+    Carnival : "/car/Carnival.png",
+    Palisade : "/car/Palisade.png",
+    K3 : "/car/K3.png",
+    K5 : "/car/K5.png",
+    K7 : "/car/K7.png",
+    K8 : "/car/K8.png",
+    Sportage : "/car/Sportage.png",
+    G70 : "/car/G70.png",
+    G80 : "/car/G80.png",
+    G90 : "/car/G90.png",
+    GV70 : "/car/GV70.png",
+    GV80 : "/car/GV80.png",
+    Morning : "/car/Morning.png",
+    Ray : "/car/Ray.png"
+  };
+
+  const carEfficiencies = {
+    Avante: 14.9,
+    Sorento: 11.8,
+    Grandeur: 9.8,
+    Sonata: 10.5,
+    SantaFe: 12.3,
+    Tucson: 12.5,
+    Carnival: 11.0,
+    Palisade: 12.2,
+    K3: 14.7,
+    K5: 13.4,
+    K7: 11.8,
+    K8: 11.7,
+    Sportage: 12.2,
+    G70: 10.0,
+    G80: 9.4,
+    G90: 8.7,
+    GV70: 9.4,
+    GV80: 8.5,
+    Morning: 15.1,
+    Ray: 12.8
   };
 
   // carHeader.addEventListener("click", () => {
@@ -52,6 +92,24 @@ document.addEventListener('DOMContentLoaded', () => {
       event.stopPropagation();
       return;
     }
+    
+    
+    carModal.style.display = "block";
+    modalCar.value = "";
+    modalFuel.value = "";
+    modalEfficiency.value = "";
+    modalEfficiency.disabled = true;
+    modalCarImage.src = "/car/default_car1.png";
+    modalCarImage.style.display = "block";
+
+    // ✅ 차량 선택 안 되어있을 때만 default 이미지 표시
+    // (모달창 닫아도 마지막 선택차량이 뜸)
+    // const selected = modalCar.value;
+    // if (!selected || !carImages[selected]) {
+    //   modalCarImage.src = "/car/default_car.png";
+    //   modalCarImage.style.display = "block";
+    // }
+
     carModal.style.display = "block";
   });
   
@@ -63,6 +121,15 @@ document.addEventListener('DOMContentLoaded', () => {
       modalCarImage.style.display = "block";
     } else {
       modalCarImage.style.display = "none";
+    }
+
+      // ✅ 차량 선택 시 고정 연비 자동 세팅
+    if (carEfficiencies[selected]) {
+      modalEfficiency.value = carEfficiencies[selected];
+      modalEfficiency.disabled = true;
+    } else {
+      modalEfficiency.value = "";
+      modalEfficiency.disabled = false;
     }
   });
 
@@ -77,6 +144,11 @@ document.addEventListener('DOMContentLoaded', () => {
       event.stopPropagation();     // 이벤트 전파 차단
       return;
     }
+
+    // ✅ 차량 이미지 초기화
+    modalCarImage.src = "/car/default_car1.png";
+    modalCarImage.style.display = "block";
+
     carModal.style.display = "block";
   });
   
@@ -139,3 +211,4 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
 })
+

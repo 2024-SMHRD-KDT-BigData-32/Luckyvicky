@@ -1,3 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Form</title>
+  <link rel="stylesheet" href="/login.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+
+      <!-- 로그인 -->
+      <div class="sign-in-container">
+        <form action="/user/login" method="post">
+          <h1>Sign In</h1>
+          <span>or use your account</span>
+
+          <input type="text" name="id" placeholder="ID" required />
+          <input type="password" name="pw" placeholder="PW" required />
+          <p class="login-error" id="loginError">로그인 실패. 아이디 또는 비밀번호를 확인하세요.</p>
+
+          <button class="form_btn" type="submit">Log In</button>
+        </form>
+      </div>
+
+      <!-- 회원가입 -->
+      <div class="sign-up-container">
+        <form action="/user/join" method="post">
+          <h1>Create Account</h1>
+          <input type="text" name="user_id" placeholder="ID" required />
+          <input type="password" name="user_pw" placeholder="PW" required />
+          <input type="text" name="user_name" placeholder="NAME" required />
+          <input type="email" name="user_email" placeholder="EMAIL" />
+          <input type="tel" name="user_phone" placeholder="PhoneNumber" />
+          <button class="form_btn" type="submit">JOIN</button>
+        </form>
+      </div>
+
+       <!-- 회원가입 완료 팝업 -->
+       <div id="joinPopup" class="popup-wrapper">
+        <div class="popup-box">
+          <h2>회원가입이 완료 되었습니다.</h2>
+          <p>로그인 후 <strong>차밥</strong>을 마음껏 이용해보세요!🎉<br /> 감사합니다.</p>
+          <div class="btns">
+            <a href="/login" class="btn">로그인</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오버레이 -->
+      <div class="overlay-container">
+        <div class="overlay-left">
+          <h1>Welcome Back</h1>
+          <p>To keep connected with us please login</p>
+          <button id="signIn" class="overlay_btn">Sign In</button>
+        </div>
+        <div class="overlay-right">
+          <h1>Hello, Friend</h1>
+          <p>Enter your details and start with us</p>
+          <button id="signUp" class="overlay_btn">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const signUpBtn = document.getElementById("signUp");
+    const signInBtn = document.getElementById("signIn");
+    const container = document.querySelector(".container");
+
+    signUpBtn.addEventListener("click", () => {
+      container.classList.add("right-panel-active");
+    });
+
+    signInBtn.addEventListener("click", () => {
+      container.classList.remove("right-panel-active");
+    });
+
+    // 회원가입 성공 여부 확인
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get("joined") === "true") {
+      document.getElementById("joinPopup").style.display = "flex";
+    }
+
+    // 로그인 실패 시 메시지 표시
+    const query = new URLSearchParams(window.location.search);
+    const error = query.get("error");
+
+    if (error === "login") {
+      const errorMsg = document.getElementById("loginError");
+      errorMsg.classList.add("show");
+    }
+  </script>
+</body>
+</html>
+
+
+
+
 <!-- <!DOCTYPE html>
 <html lang="en">
 
@@ -40,104 +142,3 @@
 </body>
 
 </html> -->
-
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login Form</title>
-  <link rel="stylesheet" href="/login.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-</head>
-
-<body>
-  <div class="wrapper">
-    <div class="container">
-
-      <!-- 로그인 -->
-      <div class="sign-in-container">
-        <form action="/user/login" method="post">
-          <h1>Sign In</h1>
-          <span>or use your account</span>
-
-          <input type="text" name="id" placeholder="ID" required />
-          <input type="password" name="pw" placeholder="PW" required />
-          <button class="form_btn" type="submit">Log In</button>
-          <p class="login-error" id="loginError">로그인 실패. 아이디 또는 비밀번호를 확인하세요.</p>
-        </form>
-      </div>
-
-      <!-- 회원가입 -->
-      <div class="sign-up-container">
-        <form action="/user/join" method="post">
-          <h1>Create Account</h1>
-          <input type="text" name="user_id" placeholder="ID" required />
-          <input type="password" name="user_pw" placeholder="PW" required />
-          <input type="text" name="user_name" placeholder="NAME" required />
-          <input type="email" name="user_email" placeholder="EMAIL" />
-          <input type="tel" name="user_phone" placeholder="PhoneNumber" />
-          <button class="form_btn" type="submit">JOIN</button>
-        </form>
-      </div>
-
-      <!-- 회원가입 완료 팝업 -->
-      <div id="joinPopup" class="popup-wrapper">
-        <div class="popup-box">
-          <h2>회원가입이 완료 되었습니다.</h2>
-          <p>로그인 후 <strong>차밥</strong>을 마음껏 이용해보세요!🎉<br /> 감사합니다.</p>
-          <div class="btns">
-            <a href="/login" class="btn">로그인</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- 오버레이 -->
-      <div class="overlay-container">
-        <div class="overlay-left">
-          <h1>Welcome Back</h1>
-          <p>To keep connected with us please login</p>
-          <button id="signIn" class="overlay_btn">Sign In</button>
-        </div>
-        <div class="overlay-right">
-          <h1>🚗Welcome to CharBob🚗</h1>
-          <p>Enter your details and start with us</p>
-          <button id="signUp" class="overlay_btn">Sign Up</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const signUpBtn = document.getElementById("signUp");
-    const signInBtn = document.getElementById("signIn");
-    const container = document.querySelector(".container");
-
-    signUpBtn.addEventListener("click", () => {
-      container.classList.add("right-panel-active");
-    });
-
-    signInBtn.addEventListener("click", () => {
-      container.classList.remove("right-panel-active");
-    });
-
-    // 회원가입 성공 여부 확인
-    const urlParams = new URLSearchParams(window.location.search);
-
-    if (urlParams.get("joined") === "true") {
-      document.getElementById("joinPopup").style.display = "flex";
-    }
-
-    // 로그인 실패 시 메시지 표시
-    const query = new URLSearchParams(window.location.search);
-    const error = query.get("error");
-
-    if (error === "login") {
-      const errorMsg = document.getElementById("loginError");
-      errorMsg.classList.add("show");
-    }
-  </script>
-</body>
-
-</html>
