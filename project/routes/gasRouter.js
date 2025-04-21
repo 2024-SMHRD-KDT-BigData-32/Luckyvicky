@@ -29,16 +29,6 @@ router.get('/data', async (req, res) => {
   const areaCode = "05"; // 광주 코드
 
   try {
-    // const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, { headers });
-    // const geoData = await geoRes.json();
-    // console.log('[Geo 응답]', geoData);
-    // const areaName = geoData.address.state || geoData.address.city || geoData.address.province;
-    // const areaCode = regionCodes[areaName] || '01';
-
-    // console.log('[Geo 위치]', geoData.address);
-    // console.log('[지역명]', areaName);
-    // console.log('[지역코드]', areaCode);
-
     const natRes = await fetch(`https://www.opinet.co.kr/api/pollAvgRecentPrice.do?out=xml&code=${apiKey}&prodcd=B027`);
     const natXml = await natRes.text();
     console.log('[전국 XML]', natXml);
@@ -60,33 +50,7 @@ router.get('/data', async (req, res) => {
   }
 });
 
-// 🔸 /api/cities
-// router.get('/cities', async (req, res) => {
-//   const majorCities = {
-//     "서울특별시": "01", "부산광역시": "02", "대구광역시": "03", "인천광역시": "04", "광주광역시": "05",
-//     "대전광역시": "06", "울산광역시": "07", "세종특별자치시": "08", "경기도": "09"
-//   };
 
-//   const results = [];
-
-//   for (const [name, code] of Object.entries(majorCities)) {
-//     try {
-//       const url = `https://www.opinet.co.kr/api/avgSigunPrice.do?out=xml&sido=${code}&code=${apiKey}`;
-//       const xml = await fetch(url).then(r => r.text());
-//       const json = await parseStringPromise(xml);
-//       const oils = json?.RESULT?.OIL;
-
-//       const prices = (oils || []).map(o => parseFloat(o.PRICE?.[0])).filter(p => !isNaN(p));
-//       const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
-
-//       results.push({ name, price: avg.toFixed(2) });
-//     } catch (err) {
-//       console.error(`[도시 API 오류] ${name}`, err);
-//     }
-//   }
-
-//   res.json(results);
-// });
 // 🔸 /api/cities
 router.get('/cities', async (req, res) => {
     const majorCities = {

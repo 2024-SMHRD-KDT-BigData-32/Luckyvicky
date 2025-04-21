@@ -38,13 +38,6 @@ router.post("/login", (req, res) => {
           req.session.car_model = carRows[0].car_model;
           req.session.fuel_type = carRows[0].fuel_type;
           req.session.fuel_efficiency = carRows[0].fuel_efficiency;
-          
-          // // ✅ 확장자 구분 안 되면 jpg로 default 처리하거나, DB에 저장된 형식 그대로
-          // const imageName = car_model.includes(".") ? car_model : `${car_model}.png`;  // 또는 .jpg
-          // req.session.car_image = imageName;
-          // console.log("✅ 차량 정보 세션 저장됨:");
-          // console.log("모델명:", car_model);
-          // console.log("이미지명:", imageName);
         }
 
 
